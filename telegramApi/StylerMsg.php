@@ -15,18 +15,19 @@ class StylerMsg implements StylerMsgInterface
     private function CheckingButtons(array $keepButtons) : array
     {
         foreach ($keepButtons as &$stringButtons) {
+            $stringButtons = str_replace( ["(", ")"], "", $stringButtons );
             for ($offSetCount = 0; 2 > $offSetCount; $offSetCount++) {
-                $stringButtons = str_replace( ["(", ")"], "", $stringButtons );
                 $divideInfo = explode( "||", $stringButtons );
 
                 if (stristr($divideInfo[$offSetCount], "http")) {
                     $nameButton = $offSetCount == 0 ? $divideInfo[1] : $divideInfo[0];
-                    $stringButtons = ["text" => $nameButton, "url" => $divideInfo[$offSetCount]];
+                    $keepInfo = ["text" => $nameButton, "url" => $divideInfo[$offSetCount]];
                     continue 2;
                 }
 
-                $stringButtons = ["text" => $divideInfo[0], "callback_data" => $divideInfo[1]];
+                $keepInfo = ["text" => $divideInfo[0], "callback_data" => $divideInfo[1]];
             }
+            $stringButtons = $keepInfo;
         }
         return $keepButtons;
     }
@@ -35,8 +36,8 @@ class StylerMsg implements StylerMsgInterface
 
     public function ParseButtons() : self
     {
-        if (preg_match_all("#\\([\S ]\\|\\|[\S ]\\)#", $this->msgForParse, $matchButtons)) {
-            $this->msgForParse = preg_replace( $matchButtons[0], "", $this->msgForParse );
+        if (preg_match_all("#\\([\S ]+\\|\\|[\S ]+\\)#", $this->msgForParse, $matchButtons)) {
+            $this->msgForParse = str_replace( $matchButtons[0], "", $this->msgForParse );
             $this->keepButtons = $this->CheckingButtons( $matchButtons[0] );
         }
         return $this;
@@ -58,4 +59,3 @@ class StylerMsg implements StylerMsgInterface
         return $this;
     }
 }
-
