@@ -22,7 +22,7 @@ class StylerMsg implements StylerMsgInterface
                 if (stristr($divideInfo[$offSetCount], "http")) {
                     $nameButton = $offSetCount == 0 ? $divideInfo[1] : $divideInfo[0];
                     $keepInfo = ["text" => $nameButton, "url" => $divideInfo[$offSetCount]];
-                    continue;
+                    break;
                 }
 
                 $keepInfo = ["text" => $divideInfo[0], "callback_data" => $divideInfo[1]];
