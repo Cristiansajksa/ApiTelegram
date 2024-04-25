@@ -36,7 +36,7 @@ class StylerMsg implements StylerMsgInterface
 
     public function ParseButtons() : self
     {
-        if (preg_match_all("#\\([\S ]+\\|\\|[\S ]+\\)#", $this->msgForParse, $matchButtons)) {
+        if (preg_match_all("#\\([\S]+\\|\\|[\S]+\\)#", $this->msgForParse, $matchButtons)) {
             $this->msgForParse = str_replace( $matchButtons[0], "", $this->msgForParse );
             $this->keepButtons = $this->CheckingButtons( $matchButtons[0] );
         }
