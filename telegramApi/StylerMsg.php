@@ -1,7 +1,7 @@
 <?php
 class StylerMsg implements StylerMsgInterface 
 {
-    private array $keepButtons;
+    public string $keepButtons = "";
     public string $msgForParse;
 
 
@@ -12,7 +12,7 @@ class StylerMsg implements StylerMsgInterface
 
 
 
-    private function CheckingButtons(array $keepButtons) : array
+    private function CheckingButtons(array $keepButtons) : string
     {
         foreach ($keepButtons as &$stringButtons) {
             $stringButtons = str_replace( ["(", ")"], "", $stringButtons );
@@ -22,14 +22,14 @@ class StylerMsg implements StylerMsgInterface
                 if (stristr($divideInfo[$offSetCount], "http")) {
                     $nameButton = $offSetCount == 0 ? $divideInfo[1] : $divideInfo[0];
                     $keepInfo = ["text" => $nameButton, "url" => $divideInfo[$offSetCount]];
-                    continue 2;
+                    continue;
                 }
 
                 $keepInfo = ["text" => $divideInfo[0], "callback_data" => $divideInfo[1]];
             }
             $stringButtons = $keepInfo;
         }
-        return $keepButtons;
+        return json_encode( ["inline_keyboard" => array_chunk($keepButtons, 2)] );
     }
 
 
@@ -47,7 +47,7 @@ class StylerMsg implements StylerMsgInterface
 
     public function ProcessVar() : self 
     {
-        if (preg_match_all("\\$[A-Z]\w+", $this->msgForParse, $matchVarsLiterally)) {
+        if (preg_match_all("#\\$[A-Z]\w+#i", $this->msgForParse, $matchVarsLiterally)) {
 
             foreach ($matchVarsLiterally[0] as $varsLiterally) {
                 $nameVars = str_replace( "\$", "", $varsLiterally );
