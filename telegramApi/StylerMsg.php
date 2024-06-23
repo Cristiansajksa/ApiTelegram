@@ -2,12 +2,12 @@
 class StylerMsg implements StylerMsgInterface 
 {
     public string $keepButtons = "";
-    public string $msgForParse;
+    public string $msgForParse, $msgResult;
 
 
     public function __construct(string $msgForParse) 
     {
-        $this->msgForParse = $msgForParse;
+        $this->msgResult = $this->msgForParse = $msgForParse;
     }
 
 
@@ -37,7 +37,7 @@ class StylerMsg implements StylerMsgInterface
     public function ParseButtons() : self
     {
         if (preg_match_all("#\\([\S]+\\|\\|[\S]+\\)#", $this->msgForParse, $matchButtons)) {
-            $this->msgForParse = str_replace( $matchButtons[0], "", $this->msgForParse );
+            $this->msgResult = $this->msgForParse = str_replace( $matchButtons[0], "", $this->msgForParse );
             $this->keepButtons = $this->CheckingButtons( $matchButtons[0] );
         }
         return $this;
@@ -48,11 +48,12 @@ class StylerMsg implements StylerMsgInterface
     public function ProcessVar() : self 
     {
         if (preg_match_all("#\\$[A-Z]\w+#i", $this->msgForParse, $matchVarsLiterally)) {
+            $this->msgResult = $this->msgForParse;
 
             foreach ($matchVarsLiterally[0] as $varsLiterally) {
                 $nameVars = str_replace( "\$", "", $varsLiterally );
-                $valueReplace = isset( $GLOBALS[$nameVars] ) ? $GLOBALS[$nameVars] : $varsLiterally;
-                $this->msgForParse = str_replace( $varsLiterally, $valueReplace, $this->msgForParse );
+                $valueReplace = isset( $GLOBALS[$nameVars] ) ? $GLOBALS[$nameVars] : "";
+                $this->msgResult = str_replace( $varsLiterally, $valueReplace, $this->msgResult );
             }
         }
         
