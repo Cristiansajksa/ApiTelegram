@@ -1,4 +1,5 @@
 <?php
+
 class ManegeApiHttps implements ManegeApiHttpsInterface
 {
     private string $keepTokenBot;
@@ -9,7 +10,6 @@ class ManegeApiHttps implements ManegeApiHttpsInterface
     {
         $this->keepTokenBot = "https://api.telegram.org/bot$botToken/";
     }
-
 
     
     public function Get(string $method, array|string $params = "") : CurlHandle 
