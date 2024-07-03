@@ -1,6 +1,6 @@
 <?php
 
-class ManegeApiHttps implements ManegeApiHttpsInterface
+class Api implements TelegramInterface
 {
     private string $keepTokenBot;
     public static array $configCurl = [CURLOPT_RETURNTRANSFER => true];

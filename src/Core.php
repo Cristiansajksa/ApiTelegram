@@ -1,5 +1,5 @@
 <?php
-class TelegramApi
+class Core
 {
     private object $objectManegeApiHttps;
     private string $botToken;
