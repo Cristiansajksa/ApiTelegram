@@ -1,5 +1,5 @@
 <?php
-class TelegramApi
+class Core
 {
     private object $objectManegeApiHttps;
     private string $botToken;
@@ -9,7 +9,7 @@ class TelegramApi
 
     public function __construct(string $botToken, bool $verifyToken = true) 
     {
-        $this->objectManegeApiHttps = new ManegeApiHttps( $botToken );
+        $this->objectManegeApiHttps = new Api( $botToken );
         $this->botToken = $botToken;
         if ($verifyToken) {
             $this->objectManegeApiHttps->CheckerResult( $this->objectManegeApiHttps->Get("getme"), "getme" );

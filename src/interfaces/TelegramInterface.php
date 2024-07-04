@@ -1,5 +1,5 @@
 <?php
-interface ManegeApiHttpsInterface
+interface TelegramInterface
 {
     public function Get(string $method, array|string $params);
     public function Post(string $method, array|string $postField);

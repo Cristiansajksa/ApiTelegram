@@ -1,5 +1,5 @@
 <?php
-class StylerMsg implements StylerMsgInterface 
+class MessageStyler implements StylerMsgInterface 
 {
     public string $keepButtons = "";
     public string $msgForParse, $msgResult;
