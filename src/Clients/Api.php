@@ -1,9 +1,8 @@
 <?php
-
-class Api implements TelegramInterface
+class ManegeApiHttps
 {
     private string $keepTokenBot;
-    public static array $configCurl = [CURLOPT_RETURNTRANSFER => true];
+    public static array $configCurl = [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 30];
 
 
     public function __construct(string $botToken)
@@ -11,10 +10,12 @@ class Api implements TelegramInterface
         $this->keepTokenBot = "https://api.telegram.org/bot$botToken/";
     }
 
+
     
     public function Get(string $method, array|string $params = "") : CurlHandle 
     {
         $params = is_array($params) ? http_build_query($params) : $params;
+        
         $curlObject = curl_init( $this->keepTokenBot . "$method?$params" );
         curl_setopt_array( $curlObject, self::$configCurl );
         return $curlObject;
@@ -27,6 +28,7 @@ class Api implements TelegramInterface
         $curlObject = curl_init( $this->keepTokenBot . "$method" );
         curl_setopt_array( $curlObject, self::$configCurl );
         curl_setopt( $curlObject, CURLOPT_POSTFIELDS, $postField );
+        
         return $curlObject;
     }
 
@@ -47,7 +49,7 @@ class Api implements TelegramInterface
     {
         for ($countRetrys = 0; 6 >= $countRetrys; $countRetrys++) {
             $objectJson = json_decode( curl_exec($curlObject) );
-            if ($objectJson->ok) {
+            if (@$objectJson->ok) {
                 break;
             }
         }
