@@ -1,4 +1,7 @@
 <?php
+namespace Cristiansajksa\Api;
+
+use Cristiansajksa\Api\Clients\Api;
 class TelegramApi
 {
     private object $objectManegeApiHttps;
@@ -12,7 +15,7 @@ class TelegramApi
     public function __construct(string $botToken, bool $verifyToken = true) 
     {
         self::$objectTelegramApi = $this;
-        $this->objectManegeApiHttps = new ManegeApiHttps( $botToken );
+        $this->objectManegeApiHttps = new Api( $botToken );
         $this->botToken = $botToken;
 
         if ($verifyToken) {
