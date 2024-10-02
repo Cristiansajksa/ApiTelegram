@@ -1,5 +1,8 @@
 <?php
-class TelegramApi
+namespace Cristiansajksa\Api;
+
+use Cristiansajksa\Api\Clients\Api;
+class Core
 {
     private object $objectManegeApiHttps;
     private string $botToken;
@@ -9,10 +12,10 @@ class TelegramApi
     public static $objectTelegramApi;
 
 
-    private function __construct(string $botToken, bool $verifyToken = true) 
+    public function __construct(string $botToken, bool $verifyToken = true) 
     {
         self::$objectTelegramApi = $this;
-        $this->objectManegeApiHttps = new ManegeApiHttps( $botToken );
+        $this->objectManegeApiHttps = new Api( $botToken );
         $this->botToken = $botToken;
 
         if ($verifyToken) {
@@ -25,7 +28,7 @@ class TelegramApi
     public static function getObject(mixed ...$keepValues) : object 
     {
         $objectSend = match (empty(self::$objectTelegramApi)) {
-            true => new self(...$keepValues);
+            true => new self(...$keepValues),
             false => self::$objectTelegramApi
         };
 

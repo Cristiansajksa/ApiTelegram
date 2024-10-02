@@ -1,5 +1,11 @@
 <?php
-class ManegeApiHttps
+
+namespace Cristiansajksa\Api\Clients;
+
+use Exception;
+use CurlHandle;
+
+class Api
 {
     private string $keepTokenBot;
     public static array $configCurl = [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 30];

@@ -1,0 +1,12 @@
+{
+    "name": "cristiansajksa/api",
+    "description": "Telegram api of managen bots",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Cristiansajksa\\Api\\": "src/"
+        }
+    },
+    "require": {}
+}
