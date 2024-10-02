@@ -9,7 +9,7 @@ class TelegramApi
     public static $objectTelegramApi;
 
 
-    private function __construct(string $botToken, bool $verifyToken = true) 
+    public function __construct(string $botToken, bool $verifyToken = true) 
     {
         self::$objectTelegramApi = $this;
         $this->objectManegeApiHttps = new ManegeApiHttps( $botToken );
