@@ -25,7 +25,7 @@ class TelegramApi
     public static function getObject(mixed ...$keepValues) : object 
     {
         $objectSend = match (empty(self::$objectTelegramApi)) {
-            true => new self(...$keepValues);
+            true => new self(...$keepValues),
             false => self::$objectTelegramApi
         };
 
